@@ -1,14 +1,13 @@
-# Use an official Python base image
-FROM python:3.10-slim
+# Use the official NGINX image from Docker Hub
+FROM nginx:alpine
 
-# Set the working directory inside the container
-WORKDIR /app
+# Copy custom NGINX configuration file (optional)
+# COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy the current directory contents into the container
-COPY . .
+# Copy static website files to the default NGINX public folder
+COPY ./html /usr/share/nginx/html
+# Expose port 80
+EXPOSE 80
 
-# Install dependencies (if you have a requirements.txt)
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Command to run your app (replace with your actual script)
-CMD ["python", "app.py"]
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
